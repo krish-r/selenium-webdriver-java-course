@@ -23,6 +23,8 @@ jobs:
 
     # steps within each job
     steps:
+      - name: Set start time
+        run: echo "START_TIME=$(date +%s)" >> $GITHUB_ENV # $GITHUB_ENV can be used to store things between steps
       - uses: actions/checkout@v2 # Checkout repository under $GITHUB_WORKSPACE so the workflow can access it
       - uses: actions/setup-java@v2 # Install Java
         with:
@@ -31,4 +33,7 @@ jobs:
       - name: Run tests with maven
         working-directory: webdriver_java # Change the working directory
         run: mvn test # Run maven test
+      - name: Collect build data
+        if: always() # run always
+        run: expr $(date +%s) - ${START_TIME}
 
