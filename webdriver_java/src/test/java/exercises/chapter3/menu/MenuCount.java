@@ -13,9 +13,9 @@ public class MenuCount {
 
     public void printLinkCount(){
         var driverExtension = "";
-        if(System.getenv("RUNNER_OS") != null) {
-            driverExtension = "-linux";
-        };
+//        if(System.getenv("RUNNER_OS") != null) {
+//            driverExtension = "-linux";
+//        };
         System.setProperty("webdriver.chrome.driver", "resources/chromedriver" + driverExtension);
         driver = new ChromeDriver();
         driver.get("https://the-internet.herokuapp.com/");

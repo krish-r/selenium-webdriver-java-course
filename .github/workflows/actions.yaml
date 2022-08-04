@@ -17,6 +17,18 @@ on:
 jobs:
   build_and_test:
     runs-on: ubuntu-latest
+    env: # Configure environment variables used in the code
+      RUNNER_OS: true
+      HEADLESS_CHROME: true # Required for CI
+
+    # steps within each job
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2 # Checkout repository under $GITHUB_WORKSPACE so the workflow can access it
+      - uses: actions/setup-java@v2 # Install Java
+        with:
+          distribution: 'zulu'
+          java-version: 16
+      - name: Run tests with maven
+        working-directory: webdriver_java # Change the working directory
+        run: mvn test # Run maven test
 
