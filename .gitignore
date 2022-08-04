@@ -6,4 +6,4 @@
 webdriver_java/target
 
 # Personal chromedriver
-webdriver_java/resources/chromedriver
+#webdriver_java/resources/chromedriver
