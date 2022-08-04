@@ -22,11 +22,11 @@ public class BaseTests {
 
     @BeforeClass
     public void setUp(){
-        var driverExtention = "";
+        var driverExtension = "";
         if(System.getenv("RUNNER_OS") != null) {
-            driverExtention = "-linux";
+            driverExtension = "-linux";
         };
-        System.setProperty("webdriver.chrome.driver", "resources/chromedriver" + driverExtention);
+        System.setProperty("webdriver.chrome.driver", "resources/chromedriver" + driverExtension);
         driver = new EventFiringWebDriver(new ChromeDriver(getChromeOptions()));
         driver.register(new EventReporter());
     }
