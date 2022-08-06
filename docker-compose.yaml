@@ -17,6 +17,13 @@ services:
     ports:
       - 9091:9091
 
+  grafana:
+    image: grafana/grafana
+    expose:
+      - 3000
+    ports:
+      - 3000:3000
+
 # Layout      
 # prometheus server
 #   access port 9090

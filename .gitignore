@@ -2,6 +2,11 @@
 .idea/
 *.iml
 
+# jdtls files and folders
+webdriver_java/.classpath
+webdriver_java/.project
+webdriver_java/.settings/
+
 # Maven build artifacts
 webdriver_java/target
 
