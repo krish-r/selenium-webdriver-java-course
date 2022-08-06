@@ -34,6 +34,8 @@ jobs:
         working-directory: webdriver_java # Change the working directory
         run: mvn test # Run maven test
       - name: Collect build data
+        working-directory: webdriver_java # Change the working directory
         if: always() # run always
-        run: expr $(date +%s) - ${START_TIME}
-
+        run: | # use | for multi-line value
+          echo "github_actions_total_duration $(expr $(date +%s) - ${START_TIME})" | curl --data-binary @- {{PUSHGATEWAY_URL}}/metrics/job/github_actions
+          ./resources/test_result_script.sh
