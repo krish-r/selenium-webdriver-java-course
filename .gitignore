@@ -2,6 +2,9 @@
 .idea/
 *.iml
 
+# VS Code
+.vscode/
+
 # jdtls files and folders
 webdriver_java/.classpath
 webdriver_java/.project

@@ -1,0 +1,9 @@
+name: SampleSuite
+threadCount: 4
+parallel: classes
+
+tests:
+  - name: SampleTest
+    classes:
+      - login.LoginTests
+      - dropdown.DropdownTests
