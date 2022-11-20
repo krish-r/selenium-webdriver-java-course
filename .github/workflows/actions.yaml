@@ -11,7 +11,8 @@ name: on_push
 on:
   push:
     branches:
-      - "**" # This will run on all branches and must be quoted to be handled by yaml
+      # - "**" # This will run on all branches and must be quoted to be handled by yaml
+      - main
   # schedule:
   #   - cron: '*/10 * * * *' # This will run every 10th minute. Calculated with https://crontab.guru/#*/10_*_*_*_*
 
