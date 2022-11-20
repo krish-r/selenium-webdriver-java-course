@@ -11,6 +11,8 @@ services:
             - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
             - SE_NODE_OVERRIDE_MAX_SESSIONS=true
             - SE_NODE_MAX_SESSIONS=2
+            - SE_ENABLE_TRACING=true
+            - JAVA_OPTS=-Dotel.traces.exporter=jaeger -Dotel.exporter.jaeger.endpoint=http://jaegar:14250 -Dotel.resource.attributes=service.name=selenium-node-chrome
 
     selenium-hub:
         image: selenium/hub:4.6.0-20221104
@@ -19,3 +21,14 @@ services:
             - "4442:4442"
             - "4443:4443"
             - "4444:4444"
+        depends_on:
+            - jaegar
+        environment:
+            - SE_ENABLE_TRACING=true
+            - JAVA_OPTS=-Dotel.traces.exporter=jaeger -Dotel.exporter.jaeger.endpoint=http://jaegar:14250 -Dotel.resource.attributes=service.name=selenium-hub
+
+    jaegar:
+        image: jaegertracing/all-in-one:1.17
+        ports:
+        - "16686:16686"
+        - "14250:14250"

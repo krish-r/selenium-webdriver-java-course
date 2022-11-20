@@ -34,6 +34,10 @@ public class BaseTests {
         // WebDriverManager.chromedriver().setup();
         // driver = new EventFiringWebDriver(new ChromeDriver(getChromeOptions()));
 
+        System.setProperty("otel.traces.exporter", "jaeger");
+        System.setProperty("otel.exporter.jaeger.endpoint", "http://localhost:14250");
+        System.setProperty("otel.resource.attributes", "service.name=selenium-java-client");
+
         EventFiringDecorator<WebDriver> eventFiringDecorator = new EventFiringDecorator<>(new EventReporter());
         driver = eventFiringDecorator.decorate(new RemoteWebDriver(getUrl(), getChromeOptions()));
     }
