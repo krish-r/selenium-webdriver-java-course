@@ -30,16 +30,16 @@ jobs:
       - uses: actions/checkout@v2 # Checkout repository under $GITHUB_WORKSPACE so the workflow can access it
       - uses: actions/setup-java@v2 # Install Java
         with:
-          distribution: 'zulu'
+          distribution: "zulu"
           java-version: 16
       - name: Run tests with maven
         working-directory: webdriver_java # Change the working directory
         run: mvn test # Run maven test
-      - name: Collect build data
-        working-directory: webdriver_java # Change the working directory
-        env:
-          PUSHGATEWAY_URL: ${{ secrets.PUSHGATEWAY_URL }}
-        if: always() # run always
-        run: | # use | for multi-line value
-          echo "github_actions_total_duration $(expr $(date +%s) - ${START_TIME})" | curl --data-binary @- ${PUSHGATEWAY_URL}/metrics/job/github_actions
-          ./resources/test_result_script.sh
+      # - name: Collect build data
+      #   working-directory: webdriver_java # Change the working directory
+      #   env:
+      #     PUSHGATEWAY_URL: ${{ secrets.PUSHGATEWAY_URL }}
+      #   if: always() # run always
+      #   run: | # use | for multi-line value
+      #     echo "github_actions_total_duration $(expr $(date +%s) - ${START_TIME})" | curl --data-binary @- ${PUSHGATEWAY_URL}/metrics/job/github_actions
+      #     ./resources/test_result_script.sh
