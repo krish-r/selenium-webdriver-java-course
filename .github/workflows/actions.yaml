@@ -32,9 +32,16 @@ jobs:
         with:
           distribution: "zulu"
           java-version: 16
+      - name: start dockerized selenium grid setup
+        working-directory: webdriver_java # Change the working directory
+        run: docker compose -f ../selenium-grid-docker-compose.yaml up -d
       - name: Run tests with maven
         working-directory: webdriver_java # Change the working directory
         run: mvn test # Run maven test
+      - name: stop dockerized selenium grid setup
+        if: always()
+        working-directory: webdriver_java # Change the working directory
+        run: docker compose -f ../selenium-grid-docker-compose.yaml down
       # - name: Collect build data
       #   working-directory: webdriver_java # Change the working directory
       #   env:

@@ -7,6 +7,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
@@ -17,6 +18,8 @@ import utils.WindowManager;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class BaseTests {
 
@@ -24,16 +27,17 @@ public class BaseTests {
     protected HomePage homePage;
 
     @BeforeClass
-    public void setUp(){
+    public void setUp() throws MalformedURLException{
 //        var driverExtension = "";
 //        if(System.getenv("RUNNER_OS") != null) {
 //            driverExtension = "-linux";
 //        };
 //        System.setProperty("webdriver.chrome.driver", "resources/chromedriver" + driverExtension);
 
-        WebDriverManager.chromedriver().setup();
+        // WebDriverManager.chromedriver().setup();
+        // driver = new EventFiringWebDriver(new ChromeDriver(getChromeOptions()));
 
-        driver = new EventFiringWebDriver(new ChromeDriver(getChromeOptions()));
+        driver = new EventFiringWebDriver(new RemoteWebDriver(getUrl(), getChromeOptions()));
         driver.register(new EventReporter());
     }
 
@@ -78,5 +82,17 @@ public class BaseTests {
 
     public CookieManager getCookieManager(){
         return new CookieManager(driver);
+    }
+
+    private URL getUrl() throws MalformedURLException {
+        String urlString = "http://%s:4444";
+
+        String host = "localhost";
+        String hubHost = System.getenv("HUB_HOST");
+        if (hubHost != null) {
+            host = hubHost;
+        }
+        urlString = String.format(urlString, host);
+        return new URL(urlString);
     }
 }
