@@ -2,13 +2,10 @@ package base;
 
 import com.google.common.io.Files;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
-
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
+import org.openqa.selenium.support.events.EventFiringDecorator;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import pages.HomePage;
@@ -23,7 +20,7 @@ import java.net.URL;
 
 public class BaseTests {
 
-    private EventFiringWebDriver driver;
+    private WebDriver driver;
     protected HomePage homePage;
 
     @BeforeClass
@@ -37,8 +34,8 @@ public class BaseTests {
         // WebDriverManager.chromedriver().setup();
         // driver = new EventFiringWebDriver(new ChromeDriver(getChromeOptions()));
 
-        driver = new EventFiringWebDriver(new RemoteWebDriver(getUrl(), getChromeOptions()));
-        driver.register(new EventReporter());
+        EventFiringDecorator<WebDriver> eventFiringDecorator = new EventFiringDecorator<>(new EventReporter());
+        driver = eventFiringDecorator.decorate(new RemoteWebDriver(getUrl(), getChromeOptions()));
     }
 
     @BeforeMethod
